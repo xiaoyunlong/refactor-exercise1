@@ -11,19 +11,27 @@ function statement (invoice, plays) {
 
   for (let perf of invoice.performances) {
     const play = plays[perf.playID];
-
-    let thisAmount = getAmount(play,perf);
-
+    thisAmount = getAmount(play,perf);
     volumeCredits = calculateVolumeCredits(play.type,perf.audience,volumeCredits);
-
     result += formatResult(format,play.name,thisAmount,perf.audience);
 
-    totalAmount += thisAmount;
   }
+
+  totalAmount = calculateTotalAmount(invoice.performances,plays);
 
   result += `Amount owed is ${format(totalAmount / 100)}\n`;
   result += `You earned ${volumeCredits} credits \n`;
   return result;
+}
+
+function calculateTotalAmount(performances,plays){
+      let totalAmount = 0;
+      for (let perf of performances) {
+        const play = plays[perf.playID];
+        let thisAmount = getAmount(play,perf);
+        totalAmount += thisAmount;
+      }
+      return totalAmount;
 }
 
 function formatResult(format,name,thisAmount,audienceNumber){
@@ -31,12 +39,11 @@ function formatResult(format,name,thisAmount,audienceNumber){
 }
 
 function calculateVolumeCredits(type,audienceNumber,volumeCredits){
-    // add volume credits
-    volumeCredits += Math.max(audienceNumber - 30, 0);
-    // add extra credit for every ten comedy attendees
-    if ('comedy' === type) volumeCredits += Math.floor(audienceNumber / 5);
 
+    volumeCredits += Math.max(audienceNumber - 30, 0);
+    if ('comedy' === type) volumeCredits += Math.floor(audienceNumber / 5);
     return volumeCredits;
+
 }
 
 function getAmount(play,perf){
