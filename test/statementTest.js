@@ -92,6 +92,31 @@ test('test audience is 20 and play.type is comedy', t => {
   t.is(result, expectResult);
 });
 
+test('test audience is 22 and play.type is comedy', t => {
+  //given
+    const invoice = {
+        'customer': 'SmallCo',
+        'performances': [
+            {
+                'playID': 'as-like',
+                'audience': 22,
+            }
+        ],
+    };
+
+ const expectResult = 'Statement for SmallCo\n'
+        + ` As You Like It: $476.00 (22 seats)\n`
+        + `Amount owed is $476.00\n`
+        + `You earned 4 credits \n`;
+
+  //when
+  const result = statement(invoice, plays);
+
+  //then
+  t.is(result, expectResult);
+});
+
+
 
 const plays = {
   'hamlet': {
