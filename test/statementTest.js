@@ -133,6 +133,10 @@ test('test case6: there is many performance', t => {
                 'playID': 'othello',
                 'audience': 25,
             },
+            {
+                 'playID': 'avatar',
+                 'audience': 35,
+            },
         ],
     };
 
@@ -140,8 +144,9 @@ test('test case6: there is many performance', t => {
         + ` Hamlet: $400.00 (30 seats)\n`
         + ` As You Like It: $360.00 (20 seats)\n`
         + ` Othello: $400.00 (25 seats)\n`
-        + `Amount owed is $1,160.00\n`
-        + `You earned 4 credits \n`;
+        + ` Avatar: $580.00 (35 seats)\n`
+        + `Amount owed is $1,740.00\n`
+        + `You earned 16 credits \n`;
 
   //when
   const result = statement(invoice, plays);
@@ -195,4 +200,8 @@ const plays = {
     'name': 'Othello',
     'type': 'tragedy',
   },
+  'avatar': {
+      'name': 'Avatar',
+      'type': 'comedy',
+    },
 };
