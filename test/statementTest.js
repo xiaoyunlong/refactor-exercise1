@@ -43,6 +43,31 @@ test('test audience is 30', t => {
 });
 
 
+test('test audience is more then 30', t => {
+  //given
+    const invoice = {
+        'customer': 'BigCo',
+        'performances': [
+            {
+                'playID': 'hamlet',
+                'audience': 31,
+            }
+        ],
+    };
+
+ const expectResult = 'Statement for BigCo\n'
+        + ` Hamlet: $410.00 (31 seats)\n`
+        + `Amount owed is $410.00\n`
+        + `You earned 1 credits \n`;
+
+  //when
+  const result = statement(invoice, plays);
+
+  //then
+  t.is(result, expectResult);
+});
+
+
 const plays = {
   'hamlet': {
     'name': 'Hamlet',
