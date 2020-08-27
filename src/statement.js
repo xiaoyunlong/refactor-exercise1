@@ -16,14 +16,18 @@ function statement (invoice, plays) {
 
     volumeCredits = calculateVolumeCredits(play.type,perf.audience,volumeCredits);
 
-    //print line for this order
-    result += ` ${play.name}: ${format(thisAmount / 100)} (${perf.audience} seats)\n`;
+    result += formatResult(format,play.name,thisAmount,perf.audience);
+
     totalAmount += thisAmount;
   }
 
   result += `Amount owed is ${format(totalAmount / 100)}\n`;
   result += `You earned ${volumeCredits} credits \n`;
   return result;
+}
+
+function formatResult(format,name,thisAmount,audienceNumber){
+    return ` ${name}: ${format(thisAmount / 100)} (${audienceNumber} seats)\n`;
 }
 
 function calculateVolumeCredits(type,audienceNumber,volumeCredits){
