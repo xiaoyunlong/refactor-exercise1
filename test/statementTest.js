@@ -154,6 +154,37 @@ test('test there is many performance', t => {
 
 
 
+test('test Customer BigCo has one unknown performance. ', t => {
+  //given
+    const invoice = {
+        'customer': 'BigCo',
+        'performances': [
+            {
+                'playID': 'hamlet',
+                'audience': 30,
+            }
+        ],
+    };
+
+    const plays = {
+      'hamlet': {
+        'name': 'Hamlet',
+        'type': 'horror',
+      }
+    };
+
+  //when
+   try {
+      statement(invoice, plays);
+      t.fail();
+    }
+    catch (e) {
+    //then
+      t.is(e.message, 'unknown type: horror');
+    }
+
+});
+
 
 
 
