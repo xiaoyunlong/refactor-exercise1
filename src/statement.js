@@ -1,12 +1,32 @@
-  const format = new Intl.NumberFormat('en-US', {
+const format = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
     minimumFractionDigits: 2,
   }).format;
 
 
-function statement (invoice, plays) {
-   return generateText(invoice,plays);
+function statement(invoice,plays){
+    return generateText(invoice,plays);
+}
+function statementHtml(invoice,plays) {
+
+   return generateHtml(invoice, plays);
+}
+
+function generateHtml(invoice, plays){
+     let result = `<h1>Statement for ${invoice.customer}</h1>\n`;
+     result += `<table>\n`;
+     result += `<tr><th>play</th><th>seats</th><th>cost</th></tr>\n`
+     for (let perf of invoice.performances) {
+          const play = plays[perf.playID];
+          thisAmount = getAmount(play,perf);
+          result += ` <tr><td>${play.name}</td><td>${perf.audience}</td><td>${format(thisAmount / 100)}</td></tr>\n`;
+     }
+     result += `</table>\n`;
+     result += `<p>Amount owed is <em>${format(calculateTotalAmount(invoice.performances,plays) / 100)}</em></p>\n`;
+     result += `<p>You earned <em>${calculateAllVolumeCredits(invoice.performances,plays)}</em> credits</p>\n`;
+
+     return result;
 }
 
 function generateText(invoice,plays){
@@ -86,6 +106,7 @@ function calculateComedyAmount(audienceNumber){
 }
 
 
+
 module.exports = {
-  statement,
+  statement,statementHtml
 };
