@@ -18,7 +18,7 @@ test('test there is no performances', t => {
   t.is(result, expectResult);
 });
 
-test('test audience more then 30', t => {
+test('test audience is 30', t => {
   //given
     const invoice = {
         'customer': 'BigCo',
@@ -30,8 +30,9 @@ test('test audience more then 30', t => {
         ],
     };
 
-    const expectResult = 'Statement for BigCo\n'
-        + `Amount owed is $0.00\n`
+ const expectResult = 'Statement for BigCo\n'
+        + ` Hamlet: $400.00 (30 seats)\n`
+        + `Amount owed is $400.00\n`
         + `You earned 0 credits \n`;
 
   //when
@@ -40,26 +41,6 @@ test('test audience more then 30', t => {
   //then
   t.is(result, expectResult);
 });
-
-
-    const invoice = {
-        'customer': 'BigCo',
-        'performances': [
-            {
-                'playID': 'hamlet',
-                'audience': 55,
-            },
-            {
-                'playID': 'as-like',
-                'audience': 35,
-            },
-            {
-                'playID': 'othello',
-                'audience': 40,
-            },
-        ],
-    };
-
 
 
 const plays = {
