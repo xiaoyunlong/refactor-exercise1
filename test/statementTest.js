@@ -1,7 +1,7 @@
 const test = require('ava');
 const {statement} = require('../src/statement');
 
-test('test there is no performances', t => {
+test('test case1: there is no performances', t => {
   //given
   const invoice = {
     'customer': 'BigCo',
@@ -18,7 +18,7 @@ test('test there is no performances', t => {
   t.is(result, expectResult);
 });
 
-test('test audience is 30', t => {
+test('test case2: audience is 30', t => {
   //given
     const invoice = {
         'customer': 'BigCo',
@@ -43,7 +43,7 @@ test('test audience is 30', t => {
 });
 
 
-test('test audience is more then 30', t => {
+test('test case3: audience is more then 30', t => {
   //given
     const invoice = {
         'customer': 'BigCo',
@@ -68,7 +68,7 @@ test('test audience is more then 30', t => {
 });
 
 
-test('test audience is 20 and play.type is comedy', t => {
+test('test case4: audience is 20 and play.type is comedy', t => {
   //given
     const invoice = {
         'customer': 'SmallCo',
@@ -92,7 +92,7 @@ test('test audience is 20 and play.type is comedy', t => {
   t.is(result, expectResult);
 });
 
-test('test audience is 22 and play.type is comedy', t => {
+test('test case5: audience is 22 and play.type is comedy', t => {
   //given
     const invoice = {
         'customer': 'SmallCo',
@@ -116,7 +116,7 @@ test('test audience is 22 and play.type is comedy', t => {
   t.is(result, expectResult);
 });
 
-test('test there is many performance', t => {
+test('test case6: there is many performance', t => {
   //given
     const invoice = {
         'customer': 'BigCo',
@@ -136,14 +136,12 @@ test('test there is many performance', t => {
         ],
     };
 
-
     const expectResult = 'Statement for BigCo\n'
         + ` Hamlet: $400.00 (30 seats)\n`
         + ` As You Like It: $360.00 (20 seats)\n`
         + ` Othello: $400.00 (25 seats)\n`
         + `Amount owed is $1,160.00\n`
         + `You earned 4 credits \n`;
-
 
   //when
   const result = statement(invoice, plays);
@@ -152,9 +150,7 @@ test('test there is many performance', t => {
   t.is(result, expectResult);
 });
 
-
-
-test('test Customer BigCo has one unknown performance. ', t => {
+test('test case7: Customer BigCo has one unknown performance. ', t => {
   //given
     const invoice = {
         'customer': 'BigCo',
@@ -184,8 +180,6 @@ test('test Customer BigCo has one unknown performance. ', t => {
     }
 
 });
-
-
 
 
 const plays = {
