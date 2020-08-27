@@ -1,27 +1,26 @@
-function statement (invoice, plays) {
-
-  let result = `Statement for ${invoice.customer}\n`;
-
   const format = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
     minimumFractionDigits: 2,
   }).format;
 
-  for (let perf of invoice.performances) {
-    const play = plays[perf.playID];
-    thisAmount = getAmount(play,perf);
-    result += formatResult(format,play.name,thisAmount,perf.audience);
-  }
 
-  let volumeCredits = calculateAllVolumeCredits(invoice.performances,plays);
-  let totalAmount = calculateTotalAmount(invoice.performances,plays);
-
-  result += `Amount owed is ${format(totalAmount / 100)}\n`;
-  result += `You earned ${volumeCredits} credits \n`;
-  return result;
+function statement (invoice, plays) {
+   return generateText(invoice,plays);
 }
 
+function generateText(invoice,plays){
+    let result = `Statement for ${invoice.customer}\n`;
+     for (let perf of invoice.performances) {
+        const play = plays[perf.playID];
+        thisAmount = getAmount(play,perf);
+        result += formatResult(play.name,thisAmount,perf.audience);
+     }
+     result += `Amount owed is ${format(calculateTotalAmount(invoice.performances,plays) / 100)}\n`;
+     result += `You earned ${calculateAllVolumeCredits(invoice.performances,plays)} credits \n`;
+
+     return result;
+}
 
 function calculateAllVolumeCredits(performances,plays){
       let volumeCredits = 0;
@@ -42,7 +41,7 @@ function calculateTotalAmount(performances,plays){
       return totalAmount;
 }
 
-function formatResult(format,name,thisAmount,audienceNumber){
+function formatResult(name,thisAmount,audienceNumber){
     return ` ${name}: ${format(thisAmount / 100)} (${audienceNumber} seats)\n`;
 }
 
